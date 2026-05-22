@@ -1,0 +1,350 @@
+<!-- obras.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Obras Realizadas - Soluciones y Servicios</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(to bottom,#eef5ff,#ffffff);
+    color:#1e293b;
+}
+
+header{
+    height:55vh;
+
+    background:
+    linear-gradient(rgba(0,25,55,.8),rgba(0,55,110,.75)),
+    url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1600&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.header-content h1{
+    color:white;
+    font-size:clamp(2.5rem,5vw,5rem);
+    margin-bottom:20px;
+    font-weight:800;
+}
+
+.header-content p{
+    color:#dbeafe;
+    font-size:1.2rem;
+}
+
+.galeria{
+    max-width:1400px;
+    margin:auto;
+    padding:100px 20px;
+}
+
+.grid-galeria{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.foto{
+    position:relative;
+    overflow:hidden;
+    border-radius:30px;
+
+    box-shadow:0 15px 45px rgba(0,70,170,.18);
+
+    cursor:pointer;
+
+    transition:.4s;
+
+    animation:subir .8s ease;
+}
+
+.foto:hover{
+    transform:translateY(-10px);
+}
+
+.foto img{
+    width:100%;
+    height:380px;
+    object-fit:cover;
+
+    transition:.5s;
+
+    display:block;
+}
+
+.foto:hover img{
+    transform:scale(1.08);
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(to top,rgba(0,0,0,.8),transparent);
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:25px;
+
+    pointer-events:none;
+}
+
+.overlay h3{
+    color:white;
+    font-size:1.5rem;
+}
+
+.boton-volver{
+    text-align:center;
+    margin-bottom:80px;
+}
+
+.boton-volver a{
+    background:#004aad;
+    color:white;
+
+    text-decoration:none;
+
+    padding:18px 35px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    transition:.3s;
+}
+
+.boton-volver a:hover{
+    background:#006eff;
+}
+
+footer{
+    background:#001938;
+    color:#dbeafe;
+
+    text-align:center;
+
+    padding:35px 20px;
+}
+
+#modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.92);
+
+    backdrop-filter:blur(8px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.4s ease;
+
+    z-index:9999;
+
+    padding:20px;
+}
+
+#modal.active{
+    opacity:1;
+    visibility:visible;
+}
+
+#imagenExpandida{
+    max-width:90%;
+    max-height:90%;
+
+    border-radius:24px;
+
+    transform:scale(.7);
+    opacity:0;
+
+    transition:
+    transform .45s ease,
+    opacity .45s ease;
+}
+
+#modal.active #imagenExpandida{
+    transform:scale(1);
+    opacity:1;
+}
+
+.cerrar{
+    position:absolute;
+
+    top:25px;
+    right:30px;
+
+    color:white;
+
+    font-size:42px;
+
+    cursor:pointer;
+}
+
+@keyframes subir{
+
+    from{
+        opacity:0;
+        transform:translateY(60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .foto img{
+        height:280px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+    <div class="header-content">
+
+        <h1>Obras Realizadas</h1>
+
+        <p>
+            Algunos de nuestros mejores trabajos y proyectos.
+        </p>
+
+    </div>
+
+</header>
+
+<section class="galeria">
+
+    <div class="grid-galeria" id="gridGaleria"></div>
+
+</section>
+
+<div class="boton-volver">
+    <a href="index.html">⬅ Volver al inicio</a>
+</div>
+
+<footer>
+    <p>© 2026 Soluciones y Servicios | Todos los derechos reservados</p>
+</footer>
+
+<div id="modal">
+
+    <span class="cerrar" onclick="cerrarImagen()">✕</span>
+
+    <img id="imagenExpandida">
+
+</div>
+
+<script>
+
+let trabajos = JSON.parse(localStorage.getItem('trabajos'));
+
+if(!trabajos){
+
+    trabajos = [];
+
+}
+
+const gridGaleria = document.getElementById('gridGaleria');
+
+function renderGaleria(){
+
+    gridGaleria.innerHTML = '';
+
+    trabajos.forEach(trabajo=>{
+
+        gridGaleria.innerHTML += `
+
+        <div class="foto">
+
+            <img
+                src="${trabajo.imagen}"
+                onclick="expandirImagen(this.src)"
+            >
+
+            <div class="overlay">
+                <h3>${trabajo.titulo}</h3>
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+renderGaleria();
+
+const modal = document.getElementById('modal');
+
+const imagenExpandida = document.getElementById('imagenExpandida');
+
+function expandirImagen(src){
+
+    imagenExpandida.src = src;
+
+    modal.classList.add('active');
+
+}
+
+function cerrarImagen(){
+
+    modal.classList.remove('active');
+
+}
+
+modal.addEventListener('click', function(e){
+
+    if(e.target === modal){
+
+        cerrarImagen();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

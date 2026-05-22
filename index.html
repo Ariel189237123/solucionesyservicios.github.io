@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soluciones y Servicios - Albañilería Profesional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+.slide-overlay{
+    pointer-events:none;
+}
+
+.slide-text{
+    pointer-events:none;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(to bottom,#eef5ff,#ffffff);
+    color:#1e293b;
+    overflow-x:hidden;
+}
+
+header{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(0,25,55,.78),rgba(0,55,110,.78)),
+    url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px 20px;
+    position:relative;
+}
+
+.hero{
+    max-width:900px;
+    animation:fadeIn 1.2s ease;
+}
+
+.hero img{
+    width:500 px;
+    max-width:80%;
+    margin-bottom:30px;
+    border-radius:24px;
+    box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
+
+.hero h1{
+    color:white;
+    font-size:clamp(2.4rem,5vw,5rem);
+    font-weight:800;
+    line-height:1.1;
+    margin-bottom:20px;
+}
+
+.hero p{
+    color:#dbeafe;
+    font-size:1.2rem;
+    line-height:1.8;
+    max-width:700px;
+    margin:auto;
+}
+
+.hero-buttons{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.hero-buttons a{
+    padding:16px 34px;
+    border-radius:16px;
+    text-decoration:none;
+    font-weight:700;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:white;
+    color:#004aad;
+    box-shadow:0 10px 30px rgba(255,255,255,.25);
+}
+
+.btn-secondary{
+    border:2px solid rgba(255,255,255,.4);
+    color:white;
+    backdrop-filter:blur(10px);
+}
+
+.hero-buttons a:hover{
+    transform:translateY(-5px) scale(1.03);
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:3rem;
+    color:#0f172a;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    color:#64748b;
+    font-size:1.1rem;
+}
+
+.gallery-section{
+    padding:100px 20px;
+}
+
+.carousel-container{
+    max-width:1300px;
+    margin:auto;
+    position:relative;
+}
+
+.carousel{
+    position:relative;
+    overflow:hidden;
+    border-radius:32px;
+    box-shadow:0 20px 60px rgba(0,70,170,.18);
+}
+
+.slide{
+    display:none;
+    position:relative;
+}
+
+.slide.active{
+    display:block;
+    animation:fade .8s ease;
+}
+
+.slide img{
+    width:100%;
+    height:700px;
+    object-fit:cover;
+    cursor:pointer;
+}
+
+.slide-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
+}
+
+.slide-text{
+    position:absolute;
+    bottom:40px;
+    left:40px;
+    color:white;
+}
+
+.slide-text h3{
+    font-size:2.2rem;
+    margin-bottom:10px;
+}
+
+.slide-text p{
+    color:#dbeafe;
+}
+
+.nav-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(10px);
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+    z-index:10;
+    transition:.3s;
+}
+
+.nav-btn:hover{
+    background:white;
+    color:#004aad;
+}
+
+.prev{
+    left:20px;
+}
+
+.next{
+    right:20px;
+}
+
+.services{
+    padding:100px 20px;
+    background:linear-gradient(to bottom,#ffffff,#edf5ff);
+}
+
+.services-grid{
+    max-width:1300px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.service-card{
+    background:white;
+    padding:40px 30px;
+    border-radius:28px;
+    box-shadow:0 10px 40px rgba(0,60,140,.12);
+    transition:.35s;
+    border:1px solid #dbeafe;
+}
+
+.service-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 50px rgba(0,60,140,.22);
+}
+
+.service-icon{
+    width:75px;
+    height:75px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#004aad,#00a6ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:30px;
+    margin-bottom:25px;
+}
+
+.service-card h3{
+    font-size:1.5rem;
+    margin-bottom:15px;
+}
+
+.service-card p{
+    color:#64748b;
+    line-height:1.8;
+}
+
+.projects{
+    padding:100px 20px;
+}
+
+.projects-grid{
+    max-width:1300px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.project-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:28px;
+    box-shadow:0 15px 45px rgba(0,0,0,.15);
+}
+
+.project-card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.project-card:hover img{
+    transform:scale(1.1);
+}
+
+.project-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.8),transparent);
+    display:flex;
+    align-items:flex-end;
+    padding:30px;
+    color:white;
+}
+
+.contact{
+    padding:100px 20px;
+}
+
+.contact-box{
+    max-width:1200px;
+    margin:auto;
+    background:linear-gradient(135deg,#001d4d,#0059d6,#0099ff);
+    border-radius:40px;
+    padding:70px 40px;
+    text-align:center;
+    color:white;
+    box-shadow:0 25px 60px rgba(0,80,200,.35);
+}
+
+.contact-box h2{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.contact-box p{
+    color:#dbeafe;
+    margin-bottom:40px;
+    font-size:1.1rem;
+}
+
+.contact-links{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.contact-links a{
+    background:white;
+    color:#004aad;
+    text-decoration:none;
+    padding:18px 30px;
+    border-radius:18px;
+    font-weight:700;
+    transition:.3s;
+}
+
+.contact-links a:hover{
+    transform:scale(1.05);
+}
+
+footer{
+    background:#001938;
+    color:#dbeafe;
+    text-align:center;
+    padding:35px 20px;
+    margin-top:40px;
+}
+
+#modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    backdrop-filter:blur(8px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.4s ease;
+
+    z-index:9999;
+    padding:20px;
+}
+
+#modal.active{
+    opacity:1;
+    visibility:visible;
+}
+
+#imagenExpandida{
+
+    max-width:90%;
+    max-height:90%;
+
+    border-radius:24px;
+
+    transform:scale(.7);
+    opacity:0;
+
+    transition:
+    transform .45s ease,
+    opacity .45s ease;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.5),
+    0 0 40px rgba(0,140,255,.25);
+}
+
+#modal.active #imagenExpandida{
+    transform:scale(1);
+    opacity:1;
+}
+
+.cerrar{
+
+    position:absolute;
+    top:25px;
+    right:30px;
+
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.cerrar:hover{
+    transform:scale(1.2) rotate(90deg);
+    color:#66c2ff;
+}
+
+#modal img{
+    max-width:95%;
+    max-height:95%;
+    border-radius:20px;
+}
+
+@keyframes fade{
+    from{opacity:.4}
+    to{opacity:1}
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.6rem;
+}
+
+.section-title h2{
+    font-size:2.2rem;
+}
+
+.slide img{
+    height:420px;
+}
+
+.slide-text{
+    left:20px;
+    bottom:20px;
+}
+
+.slide-text h3{
+    font-size:1.5rem;
+}
+
+.contact-box h2{
+    font-size:2rem;
+}
+
+.nav-btn{
+    width:50px;
+    height:50px;
+}
+
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="hero">
+        <img src="solucion.jfif" alt="Logo empresa">
+
+        <h1>Construcción y Remodelación de Alta Calidad</h1>
+
+        <p>
+            Especialistas en albañilería, reformas y construcción moderna.
+            Transformamos espacios con calidad, compromiso y terminaciones profesionales.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="Obras.html" class="btn-primary">Ver Trabajos</a>
+            <a href="#contacto" class="btn-secondary">Contactar</a>
+        </div>
+    </div>
+</header>
+
+<section class="gallery-section" id="galeria">
+
+    <div class="section-title">
+        <h2>Galería Profesional</h2>
+        <p>Algunos de nuestros trabajos realizados</p>
+    </div>
+
+    <div class="carousel-container">
+
+        <button class="nav-btn prev" onclick="prevSlide()">❮</button>
+        <button class="nav-btn next" onclick="nextSlide()">❯</button>
+
+        <div class="carousel">
+
+            <div class="slide active">
+                <img src="A.jpg" onclick="expandirImagen(this.src)">
+                <div class="slide-overlay"></div>
+                <div class="slide-text">
+                    <h3>Trabajo Profesional</h3>
+                    <p>Calidad y precisión en cada detalle</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="B.jpg" onclick="expandirImagen(this.src)">
+                <div class="slide-overlay"></div>
+                <div class="slide-text">
+                    <h3>Remodelaciones</h3>
+                    <p>Espacios modernos y funcionales</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="C.jpg" onclick="expandirImagen(this.src)">
+                <div class="slide-overlay"></div>
+                <div class="slide-text">
+                    <h3>Construcción</h3>
+                    <p>Resultados premium garantizados</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="D.jpg" onclick="expandirImagen(this.src)">
+                <div class="slide-overlay"></div>
+                <div class="slide-text">
+                    <h3>Terminaciones</h3>
+                    <p>Detalles de máxima calidad</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="services">
+
+    <div class="section-title">
+        <h2>Nuestros Servicios</h2>
+        <p>Todo lo necesario para tu obra</p>
+    </div>
+
+    <div class="services-grid">
+
+        <div class="service-card">
+            <div class="service-icon">🏠</div>
+            <h3>Construcción</h3>
+            <p>
+                Construcción de viviendas, ampliaciones y proyectos personalizados.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🧱</div>
+            <h3>Albañilería</h3>
+            <p>
+                Trabajos profesionales con materiales de primera calidad.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🔨</div>
+            <h3>Remodelaciones</h3>
+            <p>
+                Renovamos espacios antiguos para convertirlos en ambientes modernos.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+    
+
+    </div>
+</section>
+
+<section class="contact" id="contacto">
+
+    <div class="contact-box">
+        <h2>¿Querés un presupuesto?</h2>
+
+        <p>
+            Contactanos y llevemos tu proyecto al siguiente nivel.
+        </p>
+
+        <div class="contact-links">
+            <a href="tel:+5493541398162">📞 Llamar</a>
+            <a href="mailto:albanileria@gmail.com">✉️ Correo</a>
+            <a href="https://www.instagram.com/ariel_solucionesyservicios.ok" target="_blank">📸 Instagram</a>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Soluciones y Servicios | Todos los derechos reservados</p>
+</footer>
+
+<div id="modal">
+
+    <span class="cerrar" onclick="cerrarImagen()">✕</span>
+
+    <img id="imagenExpandida">
+
+</div>
+<script>
+
+    
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide(index){
+
+    slides.forEach(slide=>slide.classList.remove('active'));
+
+    slides[index].classList.add('active');
+}
+
+function nextSlide(){
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}
+
+function prevSlide(){
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+}
+
+setInterval(nextSlide,4000);
+
+const modal = document.getElementById('modal');
+const imagenExpandida = document.getElementById('imagenExpandida');
+
+function expandirImagen(src){
+
+    imagenExpandida.src = src;
+
+    modal.classList.add('active');
+}
+
+function cerrarImagen(){
+
+    modal.classList.remove('active');
+}
+
+modal.addEventListener('click', function(e){
+
+    if(e.target === modal){
+
+        cerrarImagen();
+    }
+
+});
+
+
+</script>
+
+</body>
+</html>
